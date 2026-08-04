@@ -1,76 +1,190 @@
-# Credit Card Fraud Detection
+# Credit Card Fraud Detection Using Teacher–Student Knowledge Distillation
 
 ## Project Overview
-This repository contains a notebook-based workflow for detecting fraudulent credit card transactions using machine learning and evaluation techniques. The project loads uploaded datasets, preprocesses features, handles class imbalance, trains predictive models, and compares results using multiple metrics.
 
-## Features
-- Colab-ready notebook workflow
-- Automatic label detection and binary target normalization
-- Preprocessing for numerical and categorical features
-- Class imbalance handling with oversampling methods such as BorderlineSMOTE
-- Evaluation using accuracy, precision, recall, F1-score, ROC-AUC, PR-AUC, MCC, balanced accuracy, and kappa
-- Optional explainability support with SHAP
+This project presents a hybrid machine learning framework for credit card fraud detection using **Teacher–Student Knowledge Distillation**. The proposed approach combines a **Graph Attention Network v2 (GATv2)** as the Teacher model and a lightweight **SE-ResNet** as the Student model to achieve high fraud detection performance while maintaining fast inference speed.
 
-## Methodology
-1. Load and inspect uploaded datasets
-2. Clean and preprocess transaction features
-3. Split the data into training, validation, and testing sets
-4. Apply imbalance-handling strategies and train models
-5. Evaluate performance and compare results
+The framework is evaluated on **two publicly available Kaggle datasets** and compared against **XGBoost** and **Plain MLP** baseline models using multiple evaluation metrics.
 
-## Pipeline
-- Data loading from CSV or ZIP files
-- Missing value handling and feature transformation
-- Train/validation/test splitting
-- Model training and benchmarking
-- Result saving and performance comparison
+---
 
-## Models Used
-- Logistic Regression
+## Key Features
+
+- Hybrid Teacher–Student Knowledge Distillation framework
+- Graph-based fraud detection using **GATv2**
+- Lightweight **SE-ResNet Student** for fast inference
+- Graph construction using **k-Nearest Neighbors (k-NN)** and cosine similarity
+- BorderlineSMOTE for handling class imbalance
+- Probability calibration and threshold optimization
+- Cross-dataset evaluation on two public fraud datasets
+- Performance comparison with XGBoost and Plain MLP
+- Optional model explainability using SHAP
+
+---
+
+# Proposed Methodology
+
+The proposed framework consists of the following stages:
+
+1. Data Loading
+2. Data Cleaning
+3. Train / Validation / Test Split
+4. Target Encoding
+5. Quantile Transformation
+6. BorderlineSMOTE
+7. Graph Construction using k-NN
+8. Teacher Model (GATv2)
+9. Student Model (SE-ResNet)
+10. Knowledge Distillation
+11. Teacher–Student Ensemble
+12. Probability Calibration
+13. Threshold Optimization
+14. Performance Evaluation
+
+---
+
+# Project Pipeline
+
+```
+Input Datasets
+        │
+        ▼
+Load & Clean Data
+        │
+        ▼
+Train / Validation / Test Split
+        │
+        ▼
+Preprocessing
+(Target Encoding + Quantile Transformation + BorderlineSMOTE)
+        │
+        ▼
+Graph Construction (k-NN + Cosine Similarity)
+        │
+ ┌──────┴─────────────┐
+ │                    │
+ ▼                    ▼
+Teacher (GATv2)   XGBoost (Baseline)
+ │
+ ▼
+Knowledge Distillation
+ │
+ ▼
+Student (SE-ResNet)
+ │
+ ▼
+Teacher + Student Ensemble
+ │
+ ▼
+Calibration & Threshold Optimization
+ │
+ ▼
+Performance Evaluation
+```
+
+---
+
+# Models Used
+
+### Teacher Model
+
+- Graph Attention Network v2 (GATv2)
+
+### Student Model
+
+- SE-ResNet
+
+### Baseline Models
+
 - XGBoost
-- Additional comparison models used in the notebook workflow
+- Plain Multi-Layer Perceptron (MLP)
 
-## Results
-The notebook stores and compares benchmark results for different runs and evaluation metrics.
+### Ensemble Model
 
-## Dataset Links
-Dataset 1: Credit Card Fraud Detection Dataset (2023)
-- Total Transactions: 284,807
-- Features: Time, Amount, V1–V28, Class
-- Target Variable: Class (0 = Legitimate, 1 = Fraud)
-- Data Type: PCA-transformed anonymized credit card transaction records
-- Kaggle Link: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data
+- Weighted combination of Teacher and Student predictions
 
-Dataset 2: Fraudulent Online Shops Dataset
-- Total Transactions: 1141
-- Features: ID, Amount, V1–V28, Class
-- Target Variable: Class (0 = Legitimate, 1 = Fraud)
-- Data Type: PCA-transformed anonymized credit card transaction records
-- Kaggle Link: https://data.mendeley.com/datasets/m7xtkx7g5m/1
+---
 
-## Installation
-Install the required Python packages:
+# Evaluation Metrics
+
+The models are evaluated using:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- ROC-AUC
+- PR-AUC
+- Matthews Correlation Coefficient (MCC)
+- Balanced Accuracy
+- Cohen's Kappa
+
+---
+
+
+
+# Technologies Used
+
+- Python
+- PyTorch
+- Torch-Geometric
+- Scikit-learn
+- XGBoost
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- SHAP
+
+---
+
+# Installation
+
+
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If you are using Google Colab, install the extra packages used in the notebook:
+For Google Colab
 
 ```bash
 pip install imbalanced-learn xgboost shap torch-geometric
 ```
 
-## How to Run
-1. Open the notebook in the notebooks folder.
-2. Upload the required dataset files when prompted.
-3. Run the cells sequentially to load data, preprocess it, train models, and evaluate results.
+---
 
-## Future Work
-- Deploy the final model as an API or web application
-- Improve imbalanced-data handling further
-- Add real-time fraud monitoring and alerting
+# How to Run
 
-## Authors
-- Your Name
-- Project Team
+1. Open the Jupyter Notebook or Google Colab notebook.
+2. Upload the two dataset files when prompted.
+3. Run all notebook cells sequentially.
+4. View ROC, PR curves, confusion matrices, and benchmark results.
+
+---
+
+
+# Future Work
+
+- Real-time fraud detection system
+- Temporal Graph Neural Networks
+- Explainable AI using SHAP and Attention Visualization
+- Federated Learning
+- Online Learning for concept drift
+- Deployment as REST API using FastAPI
+
+---
+
+# Authors
+
+- **Raju Ansary**
+- **Moupriyo Jana**
+
+
+---
+
+# License
+
+This project is developed for academic and research purposes.
